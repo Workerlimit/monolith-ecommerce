@@ -82,7 +82,7 @@ class Product(db.Model):
     price = Column(db.Float)
     description = Column(Text)
     productImage = Column(String(255))
-    carts = db.relationship('Cart', backref='product', lazy=True)
+    carts = db.relationship('Order', backref='product', lazy=True)
 
     def json(self):
         return {
@@ -190,7 +190,7 @@ def update_cart_item_quantity(user_id, product_id):
         if user is None:
             return jsonify({"error": "User not found"}), 404
 
-        cart_item = Ordder.query.filter_by(user_id=user_id, product_id=product_id).first()
+        cart_item = Order.query.filter_by(user_id=user_id, product_id=product_id).first()
         if cart_item is None:
             return jsonify({"error": "Cart item not found"}), 404
 
